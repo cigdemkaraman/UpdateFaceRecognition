@@ -13,7 +13,7 @@ def faceNames(path):
     name=[]
     for imagePath in imagePaths:
         name.append(os.path.split(imagePath)[-1].split(".")[2])
-        print(os.path.split(imagePath)[-1])
+#        print(os.path.split(imagePath)[-1])
     return name
 
 # %%
@@ -56,6 +56,7 @@ def main():
     
             id, confidence = recognizer.predict(gray[y:y+h,x:x+w])
             print(id,confidence)
+            
             
             # Check if confidence is less them 100 ==> "0" is perfect match 
             #confidence=100-confidence
