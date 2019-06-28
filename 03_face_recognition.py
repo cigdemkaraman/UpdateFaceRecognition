@@ -3,13 +3,11 @@
 import cv2
 import numpy as np
 import os 
-
-
-
-
 # %%
+
 def faceNames(path):
     imagePaths = [os.path.join(path,f) for f in os.listdir(path)]
+#    print(imagePaths)
     name=[]
     for imagePath in imagePaths:
         name.append(os.path.split(imagePath)[-1].split(".")[2])
@@ -18,15 +16,16 @@ def faceNames(path):
 
 # %%
 def main():
-    recognizer = cv2.face.LBPHFaceRecognizer_create()
+#    radius=1,neighbors=1,grid_x=8,grid_y=8,threshold=60
+    recognizer = cv2.face.LBPHFaceRecognizer_create(radius=1,neighbors=1,grid_x=8,grid_y=8,threshold=60)
     recognizer.read('trainer/trainer.yml')
     cascadePath = "haarcascade_frontalface_default.xml"
     faceCascade = cv2.CascadeClassifier(cascadePath);
     font = cv2.FONT_HERSHEY_SIMPLEX
     id = 0
-    path="dataset"
+    path="dataset\\"
     # Initialize and start realtime video capture
-    cam = cv2.VideoCapture(0)
+    cam = cv2.VideoCapture(1)
     cam.set(3, 640) # set video widht
     cam.set(4, 480) # set video height
     
@@ -60,7 +59,7 @@ def main():
             
             # Check if confidence is less them 100 ==> "0" is perfect match 
             #confidence=100-confidence
-            if (confidence <70):
+            if (confidence < 68):
                 id = names[id]
             #confidence = "  {0}%".format(round(100 - confidence))
             else:

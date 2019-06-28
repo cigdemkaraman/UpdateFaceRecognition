@@ -49,6 +49,9 @@ def newImage(face_id,name,count,resim):
     cl1 = clahe.apply(img)
     count+=1
     cv2.imwrite("dataset/User." + str(face_id) +"." +str(name) +'.' + str(count) + ".jpg", cl1)
+    bright=cv2.addWeighted(img,2,np.zeros(img.shape,img.dtype),0,50)
+    count+1
+    cv2.imwrite("dataset/User." + str(face_id) +"." +str(name) +'.' + str(count) + ".jpg", bright)
     equ = cv2.equalizeHist(img)
     count+=1
     cv2.imwrite("dataset/User." + str(face_id) +"." +str(name) +'.' + str(count) + ".jpg", equ)
@@ -58,14 +61,14 @@ def newImage(face_id,name,count,resim):
 def main(): 
 
     start = time.time()
-    cam = cv2.VideoCapture(0)
+    cam = cv2.VideoCapture(1)
     cam.set(3, 640) # set video width
     cam.set(4, 480) # set video height
     
     face_detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     
     # For each person, enter one numeric face id
-    path="dataset"
+    path="dataset\\"
     face_id=personelId(path)
     #face_id = input('\n user id giriniz:   ')
     name= input("\nLütfen isminizi giriniz: ")
@@ -86,13 +89,13 @@ def main():
             count += 1
             resim=count
             # Save the captured image into the datasets folder
-            cv2.imwrite("dataset/User." + str(face_id) +"." +str(name) +'.' + str(count) + ".jpg", gray)
+            cv2.imwrite("dataset/User." + str(face_id) +"." +str(name) +'.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
             cv2.imshow('image', img)
             count=newImage(face_id,name,count,resim) 
         k = cv2.waitKey(100) & 0xff # Press 'ESC' for exiting video
         if k == 27:
             break
-        elif count >= 200: # Take 30 face sample and stop video
+        elif count >= 200: 
             
              break
 

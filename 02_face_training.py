@@ -35,7 +35,7 @@ def getImagesAndLabels(path):
 
 def main():
     # Path for face image database
-    path = 'dataset'
+    path = 'dataset\\'
     start = time.time()
     recognizer = cv2.face.LBPHFaceRecognizer_create()
 
